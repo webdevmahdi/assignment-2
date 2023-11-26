@@ -22,6 +22,25 @@ const createUserController = async (req: Request, res: Response) =>{
     }
 }
 
+const getUserController = async (req: Request, res: Response) =>{
+    try{
+        const result = await UserService.getAllUsersDataFromDb();
+        res.status(200).json({
+            success: true,
+            message: "All users data has retrieved",
+            data: result
+        })
+    }
+    catch(err){
+        res.status(500).json({
+            success: false,
+            message: "You have provided wrong input",
+            error: err,
+        })
+    }
+}
+
 export const UserController = {
-    createUserController
+    createUserController,
+    getUserController,
 }

@@ -39,16 +39,10 @@ userSchema.pre('save', async function(next){
     next()
 })
 userSchema.post('save', function(doc, next){
-    const userFullName = this.fullName.firstName + " " + this.fullName.lastName;
-    doc['fullName'] = userFullName;
-    doc.userId = undefined;
-    doc.isActive = undefined;
-    doc.hobbies = undefined;
-    doc.orders = undefined;
     doc.password = undefined;
-
     next();
 });
 
 
-export const User = model<UserData>('User', userSchema)
+
+export const UserModel = model<UserData>('User', userSchema)
