@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import UserData from "./user.interface";
 
-const userSchema = new Schema({
+const userSchema = new Schema<UserData>({
     userId: { type: Number, required: true, unique: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
