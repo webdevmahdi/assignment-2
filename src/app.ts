@@ -10,6 +10,6 @@ app.use(cors());
 app.use('/api', UserRouter)
 
 app.get('/', (req : Request, res : Response) => {
-  res.send('Hello World!')
+  res.send('Hello World! Talking from back end ')
 })
 export default app;

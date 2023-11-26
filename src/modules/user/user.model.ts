@@ -32,15 +32,23 @@ const userSchema = new Schema<UserData>({
     ],
 });
 
+
 userSchema.pre('save', async function(next){
     const user = this
     user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds))
     next()
 })
-userSchema.post('save', function(doc,next){
+userSchema.post('save', function(doc, next){
+    const userFullName = this.fullName.firstName + " " + this.fullName.lastName;
+    doc['fullName'] = userFullName;
+    doc.userId = undefined;
+    doc.isActive = undefined;
+    doc.hobbies = undefined;
+    doc.orders = undefined;
     doc.password = undefined;
-    next()
-})
+
+    next();
+});
 
 
 export const User = model<UserData>('User', userSchema)
