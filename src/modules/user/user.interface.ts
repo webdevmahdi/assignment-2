@@ -11,10 +11,8 @@ export type UserData = {
     age: number,
     email: string,
     isActive: boolean,
-    hobbies: [
-        string,
-        string
-    ],
+    hobbies: string[],
+
     address: {
         street: string,
         city: string,
@@ -24,7 +22,7 @@ export type UserData = {
         productName: string,
         price: number,
         quantity: number,
-    }
+    }[]
 }
 
 export default UserData;

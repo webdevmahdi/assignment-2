@@ -1,5 +1,7 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import UserData from "./user.interface";
+import bcrypt from 'bcrypt'
+import config from "../../app/config";
 
 const userSchema = new Schema<UserData>({
     userId: { type: Number, required: true, unique: true },
@@ -12,7 +14,10 @@ const userSchema = new Schema<UserData>({
     age: { type: Number, required: true },
     email: { type: String, required: true },
     isActive: { type: Boolean, required: true },
-    hobbies: [{ type: String, required: true }],
+    hobbies: {
+        type: [String],
+        required: true
+    },
     address: {
         street: { type: String, required: true },
         city: { type: String, required: true },
@@ -26,3 +31,16 @@ const userSchema = new Schema<UserData>({
         },
     ],
 });
+
+userSchema.pre('save', async function(next){
+    const user = this
+    user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds))
+    next()
+})
+userSchema.post('save', function(doc,next){
+    doc.password = undefined;
+    next()
+})
+
+
+export const User = model<UserData>('User', userSchema)

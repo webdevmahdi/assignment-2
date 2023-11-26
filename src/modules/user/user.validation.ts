@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const UserZodSchema = z.object({
+export const UserValidationSchema = z.object({
     userId: z.number(),
     username: z.string(),
     password: z.string(),
